@@ -22,7 +22,7 @@ const { sensorModel } = require("../../models/sensor");
 const { sensorEventModel } = require("../../models/sensor-event");
 
 // TEST SUITE
-describe("POST /sensors", () => {
+describe("POST /sensor-events/:_id", () => {
   // Mocha hooks
   before(async () => {
     await initDB(process.env.DB);
@@ -42,7 +42,7 @@ describe("POST /sensors", () => {
   // Test cases
   it("Should return 200 and a sensorEvent when everything is OK", (done) => {
     const sensor = new sensorModel({
-      name: "Test Sensor to update",
+      name: "Test Sensor",
       location: { latitude: 92.123, longitude: 12.699 },
       minValue: 90,
       maxValue: 60,
@@ -50,36 +50,15 @@ describe("POST /sensors", () => {
     sensor.save().then((s) => {
       simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
         request(app)
-          .post("/sensor-events/")
+          .post(`/sensor-events/${s._id}`)
           .set("Authorization", JWT)
           .send({
-            name: "Test Sensor",
-            location: { latitude: 92.123, longitude: 12.699 },
-            minValue: 90,
-            maxValue: 60,
+            sensorId: s._id,
+            value: 1,
           })
           .expect(200)
           .end(done);
       });
-    });
-  });
-
-  it("Should return 400 when trying to save duplicated sensor", function (done) {
-    simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
-      request(app)
-        .post("/sensors")
-        .set("Authorization", JWT)
-        .send({
-          name: "Test Sensor",
-          location: { latitude: 92.123, longitude: 12.699 },
-          minValue: 90,
-          maxValue: 60,
-        })
-        .expect(400, {
-          message:
-            "There was an error while saving sensor data, probably is because duplicated key.",
-        })
-        .end(done);
     });
   });
 });
