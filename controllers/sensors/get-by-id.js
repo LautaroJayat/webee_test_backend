@@ -1,6 +1,8 @@
+// SERVICES
 const getById = require("../../services/sensors/get-by-id");
 
-const createSensor = async (req, res) => {
+// CONTROLLER
+const getSensorById = async (req, res) => {
   const { _id } = req.params;
   try {
     const sensor = await getById(_id);
@@ -13,4 +15,4 @@ const createSensor = async (req, res) => {
   }
 };
 
-module.exports = createSensor;
+module.exports = getSensorById;

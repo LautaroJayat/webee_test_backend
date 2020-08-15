@@ -22,7 +22,7 @@ const app = require("../../app");
 const { sensorModel } = require("../../models/sensor");
 
 // TEST SUITE
-describe("PUT /sensors/:_id", () => {
+describe("DELETE /sensors/:_id", () => {
   // Mocha hooks
   before(async () => {
     await initDB(process.env.DB);
@@ -38,10 +38,10 @@ describe("PUT /sensors/:_id", () => {
   });
 
   // Test cases
-  it("Should return 200 and a updated Sensor when everything is OK", function (done) {
+  it("Should return 200 and the deleted Sensor when everything is OK", function (done) {
     this.timeout(5000);
     const sensor = new sensorModel({
-      name: "Test Sensor to update",
+      name: "Test Sensor to delete",
       location: { latitude: 92.123, longitude: 12.699 },
       minValue: 90,
       maxValue: 60,
@@ -50,18 +50,12 @@ describe("PUT /sensors/:_id", () => {
       //console.log(s);
       simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
         request(app)
-          .put(`/sensors/${s._id}`)
+          .delete(`/sensors/${s._id}`)
           .set("Authorization", JWT)
-          .send({
-            name: "Test Sensor Updated",
-            location: { latitude: 92.123, longitude: 12.699 },
-            minValue: 90,
-            maxValue: 60,
-          })
           .expect(200)
           .expect((res) => {
             console.log(res.body.name);
-            expect(res.body.name).toBe("Test Sensor Updated");
+            expect(res.body.name).toBe("Test Sensor to delete");
           })
           .end(done);
       });

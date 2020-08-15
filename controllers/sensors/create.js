@@ -1,5 +1,7 @@
+// SERVICES
 const createOneSensor = require("../../services/sensors/create");
 
+// CONTROLLER
 const createSensor = async (req, res) => {
   const sensor = req.body;
   try {

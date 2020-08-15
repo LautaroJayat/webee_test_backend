@@ -1,6 +1,8 @@
+// SERVICES
 const getAll = require("../../services/sensors/get-all");
 
-const createSensor = async (req, res) => {
+// CONTROLLER
+const getAllSensors = async (req, res) => {
   try {
     const sensorsArray = await getAll();
     return res.status(200).json(sensorsArray);
@@ -12,4 +14,4 @@ const createSensor = async (req, res) => {
   }
 };
 
-module.exports = createSensor;
+module.exports = getAllSensors;

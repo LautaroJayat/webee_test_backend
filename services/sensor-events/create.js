@@ -6,8 +6,7 @@ const createSensorEvent = async (model) => {
     await sensorEvent.save();
     return sensorEvent;
   } catch (error) {
-    console.error(error);
-    return false;
+    throw error;
   }
 };
 

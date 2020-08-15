@@ -1,10 +1,10 @@
-const updateOneSensor = require("../../services/sensors/update-one");
+const updateOne = require("../../services/sensors/update-one");
 
-const createSensor = async (req, res) => {
+const updateOneSensor = async (req, res) => {
   const sensor = req.body;
   const { _id } = req.params;
   try {
-    const updatedSensor = await updateOneSensor(_id, sensor);
+    const updatedSensor = await updateOne(_id, sensor);
     return res.status(200).json(updatedSensor);
   } catch (error) {
     //console.error(error);
@@ -14,4 +14,4 @@ const createSensor = async (req, res) => {
   }
 };
 
-module.exports = createSensor;
+module.exports = updateOneSensor;
