@@ -1,4 +1,4 @@
-const findSensorById = require("../../services/sensors/get-by-id");
+const findSensorById = require("../../services/sensors/get-by-id-return-id");
 
 const checkValidParentSensor = async (req, res, next) => {
   const { _id } = req.params;
