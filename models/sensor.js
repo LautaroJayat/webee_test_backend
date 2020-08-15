@@ -19,7 +19,7 @@ const sensorSchema = new Schema({
   },
   active: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   minValue: {
     type: Number,

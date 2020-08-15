@@ -8,17 +8,19 @@ if (!process.env.DB) {
     console.error(
       "Could Not load enviroment variables, please check if .env exists or if npm scripts exports correct ENV_FILE variable"
     );
-    process.exit(1);
+    return process.exit(1);
   }
 }
 const mongoose = require("mongoose");
 const request = require("supertest");
 const initDB = require("../../configs/database");
 const app = require("../../app");
+const { sensorModel } = require("../../models/sensor");
 
-describe("POST /sensor-events/:_id", () => {
+describe("POST /sensors", () => {
   before(async () => {
     await initDB(process.env.DB);
+    await sensorModel.deleteMany({});
   });
   after(
     async () =>
@@ -28,17 +30,31 @@ describe("POST /sensor-events/:_id", () => {
         }
       })
   );
-  it("Should return 404 if _id doesnt match sensor", (done) => {
+  it("Should return 200 and a Sensor when everything is OK", (done) => {
     request(app)
-      .post("/sensor-events/507f1f77bcf86cd799439011")
-      .expect(404, { message: "Could not find associated sensor" })
+      .post("/sensors")
+      .send({
+        name: "Test Sensor",
+        location: { latitude: 92.123, longitude: 12.699 },
+        minValue: 90,
+        maxValue: 60,
+      })
+      .expect(200)
       .end(done);
   });
-
-  it("Should return 400 if cant cast param to object ID", (done) => {
+  it("Should return 400 when trying to save duplicated sensor", (done) => {
     request(app)
-      .post("/sensor-events/123456")
-      .expect(400, { message: "Something went bad with your request." })
+      .post("/sensors")
+      .send({
+        name: "Test Sensor",
+        location: { latitude: 92.123, longitude: 12.699 },
+        minValue: 90,
+        maxValue: 60,
+      })
+      .expect(400, {
+        message:
+          "There was an error while saving sensor data, probably is because duplicated key.",
+      })
       .end(done);
   });
 });
