@@ -6,9 +6,9 @@ const createOne = require("../controllers/sensors-event/create");
 const getAll = require("../controllers/sensors-event/get-all");
 const getById = require("../controllers/sensors-event/get-by-id");
 const getBySensorId = require("../controllers/sensors-event/get-by-sensor-id");
-const updateOne = require('../controllers/sensors-event/update-one')
-const deleteOne = require('../controllers/sensors-event/delete-one')
-
+const updateOne = require("../controllers/sensors-event/update-one");
+const deleteOne = require("../controllers/sensors-event/delete-one");
+const deleteBySensorId = require("../controllers/sensors-event/delete-by-sensor-id");
 
 // IMPORTING MIDDLEWARES
 const checkValidParentSensor = require("../middlewares/sensors-event/check-parent-sensor");
@@ -16,9 +16,10 @@ const checkValidParentSensor = require("../middlewares/sensors-event/check-paren
 // SETTING ROUTES
 router.get("/", getAll);
 router.get("/:_id", getById);
-router.post("/:_id", checkValidParentSensor,createOne);
+router.post("/:_id", checkValidParentSensor, createOne);
 router.get("/by-sensor/:_id", checkValidParentSensor, getBySensorId);
 router.put("/:_id", checkValidParentSensor, updateOne);
 router.delete("/:_id", deleteOne);
+router.delete("/by-sensor/:_id", checkValidParentSensor, deleteBySensorId);
 
 module.exports = router;
