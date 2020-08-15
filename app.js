@@ -11,8 +11,8 @@ const checkValidCredentials = require("./middlewares/check-valid-token");
 
 // IMPORTING ROUTES
 const sensorEventsRouter = require("./routes/sensor-events");
-const sensorsRouter = require("./routes/sensor-events");
-const usersRouter = require("./routes/sensor-events");
+const sensorsRouter = require("./routes/sensors");
+const usersRouter = require("./routes/users");
 
 // SETTING UP MIDDLEWARES AND CONFIGURATIONS
 app.use(express.json());

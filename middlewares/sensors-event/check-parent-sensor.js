@@ -2,7 +2,8 @@ const findSensorById = require("../../services/sensors/get-by-id");
 
 const checkValidParentSensor = async (req, res, next) => {
   const { _id } = req.params;
-  if (!_id) {
+  if (!_id || _id === "") {
+    console.log("id", _id);
     return res.status(400).json({ message: "Could not find sensor id" });
   }
   try {
