@@ -5,6 +5,7 @@ const router = express.Router();
 const createOne = require("../controllers/sensors/create");
 const getById = require("../controllers/sensors/get-by-id");
 const getAll = require("../controllers/sensors/get-all");
+const updateOneSensor = require("../controllers/sensors/update-one");
 
 // IMPORTING MIDDLEWARES
 const checkNoMissingSensorFields = require("../middlewares/sensors/check-all-fields-before-saving");
@@ -13,7 +14,7 @@ const checkNoMissingSensorFields = require("../middlewares/sensors/check-all-fie
 router.get("/", getAll);
 router.get("/:_id", getById);
 router.post("/", checkNoMissingSensorFields, createOne);
-router.put("/:_id", checkNoMissingSensorFields, createOne);
+router.put("/:_id", checkNoMissingSensorFields, updateOneSensor);
 router.delete("/:_id", createOne);
 
 module.exports = router;

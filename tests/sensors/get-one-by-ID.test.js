@@ -51,7 +51,6 @@ describe("Get /sensors/:_id", () => {
         request(app)
           .get(`/sensors/${s._id}`)
           .set("Authorization", JWT)
-          .send()
           .expect(200)
           .end(done);
       });

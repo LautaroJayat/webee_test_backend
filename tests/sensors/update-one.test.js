@@ -15,6 +15,7 @@ if (!process.env.DB) {
 // IMPORTING DEPENDENCIES
 const mongoose = require("mongoose");
 const request = require("supertest");
+const expect = require("expect");
 const initDB = require("../../configs/database");
 const { simpleJWTSign } = require("../../configs/encryption");
 const app = require("../../app");
@@ -37,38 +38,33 @@ describe("POST /sensors", () => {
   });
 
   // Test cases
-  it("Should return 200 and a Sensor when everything is OK", (done) => {
-    simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
-      request(app)
-        .post("/sensors")
-        .set("Authorization", JWT)
-        .send({
-          name: "Test Sensor",
-          location: { latitude: 92.123, longitude: 12.699 },
-          minValue: 90,
-          maxValue: 60,
-        })
-        .expect(200)
-        .end(done);
+  it("Should return 200 and a updated Sensor when everything is OK", function (done) {
+    this.timeout(5000);
+    const sensor = new sensorModel({
+      name: "Test Sensor to update",
+      location: { latitude: 92.123, longitude: 12.699 },
+      minValue: 90,
+      maxValue: 60,
     });
-  });
-
-  it("Should return 400 when trying to save duplicated sensor", function (done) {
-    simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
-      request(app)
-        .post("/sensors")
-        .set("Authorization", JWT)
-        .send({
-          name: "Test Sensor",
-          location: { latitude: 92.123, longitude: 12.699 },
-          minValue: 90,
-          maxValue: 60,
-        })
-        .expect(400, {
-          message:
-            "There was an error while saving sensor data, probably is because duplicated key.",
-        })
-        .end(done);
+    sensor.save().then((s) => {
+      //console.log(s);
+      simpleJWTSign({ payload: "mocking payload" }).then((JWT) => {
+        request(app)
+          .put(`/sensors/${s._id}`)
+          .set("Authorization", JWT)
+          .send({
+            name: "Test Sensor Updated",
+            location: { latitude: 92.123, longitude: 12.699 },
+            minValue: 90,
+            maxValue: 60,
+          })
+          .expect(200)
+          .expect((res) => {
+            console.log(res.body.name);
+            expect(res.body.name).toBe("Test Sensor Updated");
+          })
+          .end(done);
+      });
     });
   });
 });
