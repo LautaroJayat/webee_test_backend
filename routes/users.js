@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  console.log("Its working!");
-  return res.status(200).send("its working");
-});
+// IMPORTING CONTROLLERS
+const createOne = require("../controllers/users/create");
 
-router.post("/", (req, res) => {
-  console.log("Its working!");
-  return res.status(200).send("its working");
-});
+// IMPORTING MIDDLEWARES
+const checkNeededUserFields = require("../middlewares/users/check-all-fields-before-saving");
+
+// SETTING ROUTES
+
+router.post("/", checkNeededUserFields, createOne);
+
 module.exports = router;

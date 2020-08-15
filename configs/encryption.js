@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const simpleVerification = (token) => {
   try {
@@ -18,7 +19,19 @@ const simpleJWTSign = async (payload) => {
   }
 };
 
+const hashPassword = async (pass) => {
+  const hashed = await bcrypt.hash(pass, 10);
+  return hashed;
+};
+
+const checkPass = async (pass, hash) => {
+  const result = await bcrypt.compare(pass, hash);
+  return result;
+};
+
 module.exports = {
   simpleJWTSign,
   simpleVerification,
+  hashPassword,
+  checkPass,
 };

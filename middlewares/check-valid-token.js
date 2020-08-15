@@ -1,4 +1,5 @@
 const { simpleVerification } = require("../configs/encryption");
+
 const checkValidCredentials = async (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) {

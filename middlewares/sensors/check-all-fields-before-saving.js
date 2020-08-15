@@ -1,4 +1,4 @@
-const createSensor = async (req, res, next) => {
+const checkAllFieldsBeforeSaving = async (req, res, next) => {
   const sensor = req.body;
   if (!sensor.name) {
     return res
@@ -23,4 +23,4 @@ const createSensor = async (req, res, next) => {
   return next();
 };
 
-module.exports = createSensor;
+module.exports = checkAllFieldsBeforeSaving;

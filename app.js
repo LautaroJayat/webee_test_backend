@@ -13,6 +13,7 @@ const checkValidCredentials = require("./middlewares/check-valid-token");
 const sensorEventsRouter = require("./routes/sensor-events");
 const sensorsRouter = require("./routes/sensors");
 const usersRouter = require("./routes/users");
+const authRouter = require("./routes/auth");
 
 // SETTING UP MIDDLEWARES AND CONFIGURATIONS
 app.use(express.json());
@@ -24,5 +25,6 @@ app.use(cors());
 app.use("/sensors", checkValidCredentials, sensorsRouter);
 app.use("/sensor-events", checkValidCredentials, sensorEventsRouter);
 app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 
 module.exports = app;
