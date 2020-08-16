@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "export ENV_FILE=dev.env && nodemon index.js",
-    "start": "export ENV_FILE=test.env && node index.js",
+    "start": "export ENV_FILE=fake-prod.env && node index.js",
     "test": "export ENV_FILE=test.env && mocha tests/**/*.test.js"
   },
   "author": "Lautaro Jayat",
