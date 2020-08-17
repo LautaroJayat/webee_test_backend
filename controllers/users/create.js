@@ -6,6 +6,7 @@ const createOneUser = async (req, res) => {
   const user = req.body;
   try {
     const newuser = await createUser(user);
+    console.log(newuser);
     return res.status(200).json(newuser);
   } catch (error) {
     //console.error(error);

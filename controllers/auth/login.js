@@ -4,6 +4,7 @@ const comparePassAndMakeHash = require("../../services/auth/comparePassAndMakeHa
 // CONTROLLER
 const login = async (req, res) => {
   const user = req.body;
+  console.log(user);
   try {
     const JWT = await comparePassAndMakeHash(user);
     console.log("JWT!", JWT);

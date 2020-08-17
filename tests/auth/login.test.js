@@ -17,10 +17,8 @@ const mongoose = require("mongoose");
 const request = require("supertest");
 const expect = require("expect");
 const initDB = require("../../configs/database");
-const { simpleVerification } = require("../../configs/encryption");
 const app = require("../../app");
 const { userModel } = require("../../models/users");
-const { use } = require("../../routes/auth");
 
 // TEST SUITE
 describe("POST /auth", () => {
@@ -55,14 +53,11 @@ describe("POST /auth", () => {
 
   // Test cases
   it("Should return 200 and a JWT when using previously saved user credentials", (done) => {
-    const newUser = new userModel(userData);
-    newUser.save().then((user) => {
-      request(app)
-        .post("/auth")
-        .send(userData)
-        .expect(200)
-        .expect((res) => expect(res.body).toBeTruthy())
-        .end(done);
-    });
+    request(app)
+      .post("/auth")
+      .send(userData)
+      .expect(200)
+      .expect((res) => expect(res.body).toBeTruthy())
+      .end(done);
   });
 });

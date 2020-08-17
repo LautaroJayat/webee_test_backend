@@ -1,6 +1,6 @@
 const checkUserData = async (req, res, next) => {
   const user = req.body;
-  console.log("user!", user);
+  //console.log("user!", user);
   if (!user.name) {
     return res
       .status(400)

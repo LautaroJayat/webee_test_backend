@@ -7,7 +7,7 @@ const updateOneSensorEvent = async (req, res) => {
     const updatedSensorEvent = await updateOne(_id, sensor);
     return res.status(200).json(updatedSensorEvent);
   } catch (error) {
-    //console.error(error);
+    console.error(error);
     return res.status(400).json({
       message: "There was an error while saving sensor data.",
     });
